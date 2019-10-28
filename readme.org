@@ -1,0 +1,32 @@
+#+TITLE: Football on paper
+
+Python scripts and a Stan model supporting my submission to the 2020 Optapro forum.
+
+* Python dependencies
+- Python
+- Pandas
+- Numpy
+- Scipy
+- Matplotlib
+- Arviz
+- Cmdstanpy
+
+* How to reproduce my analysis
+First, make sure you have installed all the dependencies and have suitable xml
+files in the ~example_data~ folder.
+
+To munge the xml data into a nice analyseable form, run the python scripts
+~write_events.py~ and ~write_sequences.py~ as follows:
+
+#+begin_src bash
+python write_events.py
+python write_sequences.py
+#+end_src
+
+To perform the analysis, run the python script ~run_analysis.py~:
+
+#+begin_src bash
+python run_analysis
+#+end_src
+ 
+This should create some plots in the ~plots~ folder.
