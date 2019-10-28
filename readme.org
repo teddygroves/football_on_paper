@@ -1,7 +1,3 @@
-#+TITLE: Football on paper
-
-Python scripts and a Stan model supporting my submission to the 2020 Optapro forum.
-
 * Python dependencies
 - Python
 - Pandas
