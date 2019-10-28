@@ -1,0 +1,129 @@
+#+TITLE: Optapro forum 2020 submission
+#+OPTIONS: author:nil
+
+*** Information
+- **Name**: Teddy Groves
+- **Address**: [INSERT ADDRESS]
+- **Contact information**: [INSERT CONTACT INFO]
+- **Are you submitting on behalf of a commercial organisation**: No
+- **Submission category**: Identifying and evaluating strategies to break down
+  a low-block
+- **Project title**: Football on paper - Breaking down deep blocks with ideas
+  from basketball analytics
+- **Research question**: Can the ideas from /Basketball on paper/ be used to
+  identify strategies for breaking down deep blocks in football?
+- **Research objective**: Identify important aspects of FCN's attacking
+  strategy against deep blocks
+- **Reproducibility**: To reproduce my analysis please visit [[https://github.com/teddygroves/football_on_paper][this github
+  repository]] and follow the instructions in the readme.
+
+***  Rationale for chosen topic
+The book /Basketball on paper/ introduces some helpful concepts for
+statistically analysing basketball on a possession-by-possession basis. My talk
+will explore how these concepts can be applied to soccer, helping FC
+Nordsjælland to break down deep blocks.
+
+The main idea I will borrow is to evaluate teams and players based on the
+scores they tend to achive or allow per sequence of play.
+
+***  Your approach to answering this question
+The first step in my analysis is to identify sequences of play where the
+defending team employs a low block. I have found a simple rule for doing this
+based on event data - if there are 7 passes in a single sequence, I assume that
+the defending team has had time to position their players behind the ball. This
+approach is not perfect but I think it is a reasonable first approximation. I
+will explore ways to use it to identify deep block sequences more accurately.
+
+In order to score sequences, I will use all available data to try to capture
+the total danger that the attacking team created. A simple way of doing this is
+to score each sequence according to the highest expected goals value of all its
+passes and shots.
+
+To shed light on how best to break down a deep block, I'll make a predictive
+model of the deep block sequences' scores. Looking at where this model's
+predictions tend to fail will help to answer questions like
+
+- Do FCN's deep block sequences crucially depend on any particular players?
+- Do FCN tend to do better than expected against deep blocks towards the start
+  or end of the game?
+- Do FCN's deep block sequences go better or worse than expected depending on
+  how far the sequence starts further away from the opponent's goal?
+
+*** The applications of this research within a professional football environment
+To illustrate this general approach I applied my planned analysis to the
+provided data. I identified 1463 deep block sequences using the criteria
+outlined above and found expected goals for passes and shots using the opta
+qualifiers 318 and 321. In order to best highlight outlying sequences I fit a
+simple mulitlevel model that predicted best expected goals, taking into account
+the attacking team, the defending team, home advantage, starting distance from
+the goal and time.
+
+Here is a plot of the model's predictions vs what actually happened. The x axis
+shows the distance from the goal at the start of the sequence and the y axis
+shows the sequence's maximum expected goals on logit scale. The model's
+predictions for each sequence are represented by a grey bar.
+
+[[file:plots/yrep_start_distance_and_team.png]]
+
+From this plot it is clear that some teams had a lot more deep block sequences
+than others. For example, Manchester City had 148 deep block sequences whereas
+Newcastle United had only 23 (the two teams had 573 and 603 total sequences
+respectively).
+
+Of the teams with lots of deep block sequences, the model predicted those of
+Tottenham Hotspur well, with few outliers and only 18% of sequences falling
+outside their 10%-90% credible intervals. On the other hand, 24% of Arsenal's
+sequences lie outside the credible intervals and the gaps tend to be
+larger. This pattern suggested to me that it might be worth looking closer at
+Arsenal's sequences to find what the model is missing.
+
+To find if Arsenal's deep block sequences depend on any particular players, I
+looked at the order in which players were involved in their five deep block
+sequences with the highest and lowest maximum expected goals. The thing that
+stuck out tom me was that Özil's name appears many times in the first list but
+only once in the second.
+
+Arsenal's 5 deep block sequences with highest expected goals: 
+
+#+begin_quote
+Bellerín-Koscielny-Monreal-Welbeck-Bellerín-Özil-Bellerín-Özil-Ramsey
+
+Oxlade-Chamberlain-Cech-Xhaka-Özil-Ramsey-Xhaka-Özil-Ramsey-Bellerín-Özil-Kolasinac-Xhaka-Monreal-Mustafi-Kolasinac-Ramsey-Kolasinac-Özil-Welbeck
+
+Kolasinac-Monreal-Koscielny-Mustafi-Monreal-Kolasinac-Ramsey-Kolasinac-Welbeck
+
+Holding-Monreal-Holding-Monreal-Kolasinac-Özil-Kolasinac-Özil-Welbeck-Elneny-Welbeck-Bellerín
+
+Bellerín-Monreal-Özil-Xhaka-Oxlade-Chamberlain-Mustafi-Özil-Welbeck-Bellerín-Özil-Giroud-Welbeck
+#+end_quote
+
+Arsenal's 5 deep block sequences with lowest expected goals: 
+
+#+begin_quote
+Holding-Bellerín-Elneny-Xhaka-Monreal-Elneny-Xhaka
+
+Bellerín-Kolasinac-Monreal-Mustafi-Monreal-Kolasinac-Monreal-Mustafi
+
+Bellerín-Elneny-Bellerín-Holding-Monreal-Xhaka-Oxlade-Chamberlain
+
+Oxlade-Chamberlain-Ramsey-Monreal-Cech-Özil-Bellerín-Xhaka
+
+Monreal-Oxlade-Chamberlain-Xhaka-Oxlade-Chamberlain-Monreal-Kolasinac-Bellerín-Xhaka
+#+end_quote
+
+Comparing Özil's sequences to those of Xhaka gives an interesting insight into
+Arsenal's deep block strategy. Özil was involved in all but two of Arsenal's
+outlying sequences on the good side and only two on the bad side. In most of
+the bad cases, Xhaka was involved but Özil was not. Perhaps Arsenal could have
+improved their deep block strategy by making it easier for Özil to get the ball.
+
+[[file:plots/%C3%96zil_vs_Xhaka.png]]
+
+A similar approach can be used to identify problems in a team's deep block
+strategy. For example, West Ham United's deep block sequences tended to go
+worse when their goalkeeper Hart was involved, suggesting to a possible issue
+with how they were playing the ball out from the goalkeeper. In contrast, Manchester
+City tended to be roughly as effective when their goalkeeper Ederson was
+involved as they were in other sequences:
+
+[[file:plots/Hart_vs_Ederson.png]]
