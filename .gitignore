@@ -1,0 +1,10 @@
+export_*
+__pycache__/*
+*.hpp
+*.o
+*.csv
+example_data/*
+!example_data/readme.org
+*.pdf
+plots/*
+!plots/readme.org
